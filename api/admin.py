@@ -1,0 +1,21 @@
+from django.contrib import admin
+from .models import *
+
+admin.site.register(UserProfile)
+admin.site.register(StudentProfile)
+admin.site.register(TeacherProfile)
+admin.site.register(ParentProfile)
+admin.site.register(Subject)
+admin.site.register(Chapter)
+admin.site.register(Topic)
+admin.site.register(Question)
+admin.site.register(MCQOption)
+admin.site.register(QuestionAnswer)
+admin.site.register(Quiz)
+admin.site.register(QuizQuestion)
+admin.site.register(QuizAttempt)
+admin.site.register(StudentQuizAnswer)
+admin.site.register(StudyMaterial)
+admin.site.register(PerformanceAnalytics)
+admin.site.register(Badge)
+admin.site.register(StudentBadge)

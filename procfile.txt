@@ -1,0 +1,2 @@
+web: gunicorn eldas.wsgi:application --log-file - --log-level info
+release: python manage.py migrate
