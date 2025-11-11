@@ -16,6 +16,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
+    'corsheaders',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
@@ -26,6 +27,7 @@ INSTALLED_APPS = [
 
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',  # GOOD: Already at correct position
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -122,3 +124,8 @@ SIMPLE_JWT = {
 
 
 GEMINI_API_KEY = config('GEMINI_API_KEY', default='')
+ 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",            # For React dev (change if needed)
+     # For live frontend (add your real domain)
+]
