@@ -107,11 +107,6 @@ REST_FRAMEWORK = {
 }
 
 
-# CHANGE: Updated CORS for Render deployment
-CORS_ALLOWED_ORIGINS = config(
-    'CORS_ALLOWED_ORIGINS', 
-    default='http://localhost:3000,https://your-frontend.onrender.com'
-).split(',')
 
 
 SIMPLE_JWT = {
@@ -123,7 +118,18 @@ SIMPLE_JWT = {
 
 GEMINI_API_KEY = config('GEMINI_API_KEY', default='')
  
+# --- CORS SETTINGS ---
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",            # For React dev (change if needed)
-     # For live frontend (add your real domain)
+    "http://localhost:3000",               # ✅ Your React frontend (local)
+]
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = [
+    "content-type",
+    "authorization",
+]
+
+# --- CSRF SETTINGS ---
+CSRF_TRUSTED_ORIGINS = [
+    "https://eldas-backend.onrender.com",  # ✅ Your Render backend
+    "http://localhost:3000",               # ✅ Your local frontend
 ]
