@@ -6,11 +6,20 @@ from .models import *
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
     role = serializers.CharField(write_only=True, required=False)  # Allow frontend to send role
-    profile_role = serializers.CharField(source='profile.role', read_only=True)  # Return role from profile
+    profile_role = serializers.SerializerMethodField()  # Return role from profile
 
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'password', 'role', 'profile_role']
+
+    def get_profile_role(self, obj):
+        """Safely get profile role"""
+        try:
+            if hasattr(obj, 'profile') and obj.profile:
+                return obj.profile.role
+        except:
+            pass
+        return None
 
     def create(self, validated_data):
         role = validated_data.pop('role', None)  # Remove role from user creation

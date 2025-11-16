@@ -19,11 +19,17 @@ class RegisterView(generics.CreateAPIView):
     
     def create(self, request, *args, **kwargs):
         print("REGISTER REQUEST DATA:", request.data)
-        serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        # UserProfile is already created in the serializer, no need to create again
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        try:
+            serializer = self.get_serializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            user = serializer.save()
+            # UserProfile is already created in the serializer, no need to create again
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            print(f"REGISTRATION ERROR: {str(e)}")
+            import traceback
+            print(f"TRACEBACK: {traceback.format_exc()}")
+            raise
 
 class LoginView(TokenObtainPairView):
     permission_classes = [AllowAny]
