@@ -22,7 +22,7 @@ class RegisterView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        UserProfile.objects.create(user=user)
+        # UserProfile is already created in the serializer, no need to create again
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class LoginView(TokenObtainPairView):
