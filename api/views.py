@@ -24,7 +24,14 @@ class RegisterView(generics.CreateAPIView):
             serializer.is_valid(raise_exception=True)
             user = serializer.save()
             # UserProfile is already created in the serializer, no need to create again
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            # Format response to match frontend expectations: { user: { ... } }
+            user_data = serializer.data.copy()
+            # Rename profile_role to role for frontend
+            if 'profile_role' in user_data:
+                user_data['role'] = user_data.pop('profile_role')
+            # Remove password field from response
+            user_data.pop('password', None)
+            return Response({'user': user_data}, status=status.HTTP_201_CREATED)
         except Exception as e:
             print(f"REGISTRATION ERROR: {str(e)}")
             import traceback
